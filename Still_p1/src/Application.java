@@ -9,20 +9,45 @@ public class Application
         String inputValue;
         String encryptedValue;
         String decryptedValue;
+        int choice;
 
         Encrypter myEncrypter= new Encrypter();
         Decrypter myDecrypter = new Decrypter();
+        choice = getChoice();
+        if(choice == 1)
+        {
+            inputValue = getEncryptionValue();
+            encryptedValue = myEncrypter.encrypt(inputValue);
 
-        inputValue = getEncryptionValue();
-        encryptedValue = myEncrypter.encrypt(inputValue);
-
-        System.out.println("You entered " + inputValue);
-        System.out.println("Encrypted value is " + encryptedValue);
-        inputValue = getDecryptionValue();
-        decryptedValue = myDecrypter.decrypt(inputValue);
-        System.out.println("Decrypted value is " + decryptedValue);
+            System.out.println("You entered " + inputValue);
+            System.out.println("Encrypted value is " + encryptedValue);
+        }
+        else
+        {
+            inputValue = getDecryptionValue();
+            decryptedValue = myDecrypter.decrypt(inputValue);
+            System.out.println("You entered " + inputValue);
+            System.out.println("Decrypted value is " + decryptedValue);
+        }
     }
 
+    static char getChoice()
+    {
+        int inputValue;
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter 1 for encryption and 2 for decryption: ");
+        while(true)
+        {
+            inputValue = input.nextInt();
+            if (inputValue == 1)
+                return 1;
+            if (inputValue == 2)
+                return 2;
+            else
+                System.out.print("Invalid entry, please enter 1 for encryption and 2 for decryption: ");
+        }
+
+    }
     static String getEncryptionValue()
     {
         String inputValue;
