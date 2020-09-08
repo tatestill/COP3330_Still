@@ -4,18 +4,22 @@ import java.util.*;
 public class Application
 {
 
-    public static void main(String args[])
+    public static void main(String[] args)
     {
         String inputValue;
         String encryptedValue;
+        String decryptedValue;
 
         Encrypter myEncrypter= new Encrypter();
+        Decrypter myDecrypter = new Decrypter();
 
         inputValue = getValue();
         encryptedValue = myEncrypter.encrypt(inputValue);
 
         System.out.println("You entered " + inputValue);
         System.out.println("Encrypted value is " + encryptedValue);
+        decryptedValue = myDecrypter.decrypt(encryptedValue);
+        System.out.println("Decrypted value is " + decryptedValue);
     }
 
     static String getValue()
@@ -45,7 +49,7 @@ public class Application
 
     static int[] convertStringToArray(String stringIn)
     {
-        int arrayOut[] = new int[4];
+        int[] arrayOut = new int[4];
         int i;
         for(i=0 ; i < 4 ; i++)
         {
@@ -57,7 +61,7 @@ public class Application
 
     static String convertArrayToString(int[] array)
     {
-        char charArray[] = new char[4];
+        char[] charArray = new char[4];
         int i;
         for(i=0 ; i < 4 ; i++)
         {
@@ -74,7 +78,7 @@ class Encrypter
 
     static String encrypt(String input)
     {
-        int digits[] = new int[4];
+        int[] digits;
         String encryptedOut;
         digits = Application.convertStringToArray(input);
 
@@ -88,9 +92,6 @@ class Encrypter
 
     }
 
-
-
-
     static int addSevenModTen(int x)
     {
         x = x + 7;
@@ -98,7 +99,7 @@ class Encrypter
         return x;
     }
 
-    static int[] firstEncrypt(int in[])
+    static int[] firstEncrypt(int[] in)
     {
         int i;
         for(i=0; i < 4 ; i++)
@@ -108,4 +109,37 @@ class Encrypter
         return in;
     }
 
+}
+
+class Decrypter
+{
+    static String decrypt(String encryptedValue)
+    {
+        String decryptedValue;
+        int[] encryptedArray;
+
+        encryptedArray = Application.convertStringToArray(encryptedValue);
+        encryptedArray = Application.swapFirstThirdandSecondFourth(encryptedArray);
+        encryptedArray = finalDecrypt(encryptedArray);
+        decryptedValue = Application.convertArrayToString(encryptedArray);
+        return decryptedValue;
+
+    }
+
+    static int[] finalDecrypt(int array[])
+    {
+        int i;
+        for(i=0 ; i < 4 ; i++)
+        {
+            if(array[i] < 7 )
+                array[i] = array[i] + 10;
+
+            array[i] = array[i] - 7;
+
+
+        }
+
+        return array;
+
+    }
 }
