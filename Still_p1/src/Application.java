@@ -6,27 +6,15 @@ public class Application
 
     public static void main(String[] args)
     {
-        String inputValue;
-        String encryptedValue;
-        String decryptedValue;
         int choice = 1;
-        Encrypter myEncrypter= new Encrypter();
-        Decrypter myDecrypter = new Decrypter();
         while(choice != 3)
         {
             choice = getChoice();
             if (choice == 1) {
-                inputValue = getEncryptionValue();
-                encryptedValue = myEncrypter.encrypt(inputValue);
-
-                System.out.println("You entered " + inputValue);
-                System.out.println("Encrypted value is " + encryptedValue + "\n");
+                performEncryption();
             }
             if (choice == 2) {
-                inputValue = getDecryptionValue();
-                decryptedValue = myDecrypter.decrypt(inputValue);
-                System.out.println("You entered " + inputValue);
-                System.out.println("Decrypted value is " + decryptedValue + "\n");
+                performDecryption();
             }
         }
         System.out.println("Goodbye!");
@@ -69,6 +57,28 @@ public class Application
         System.out.print("Enter value for decryption: ");
         inputValue = input.nextLine();
         return inputValue;
+    }
+
+    static void performEncryption()
+    {
+        String encryptedValue;
+        String inputValue = getEncryptionValue();
+        encryptedValue = Encrypter.encrypt(inputValue);
+
+        System.out.println("You entered " + inputValue);
+        System.out.println("Encrypted value is " + encryptedValue + "\n");
+    }
+
+    static void performDecryption()
+    {
+        String inputValue;
+        String decryptedValue;
+        inputValue = getDecryptionValue();
+        decryptedValue = Decrypter.decrypt(inputValue);
+        System.out.println("You entered " + inputValue);
+        System.out.println("Decrypted value is " + decryptedValue + "\n");
+
+
     }
 
    static int[] swapFirstThirdandSecondFourth(int[] array)
