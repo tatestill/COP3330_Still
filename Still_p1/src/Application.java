@@ -1,18 +1,21 @@
-import java.util.Scanner;
 
-public class Application {
+import java.util.*;
+
+public class Application
+{
 
     public static void main(String args[])
     {
         String inputValue;
+        String encryptedValue;
 
-        Encrypter encryptOut = new Encrypter();
+        Encrypter myEncrypter= new Encrypter();
 
         inputValue = getValue();
+        encryptedValue = myEncrypter.encrypt(inputValue);
 
-
-
-        System.out.print("You entered ")
+        System.out.println("You entered " + inputValue);
+        System.out.println("Encrypted value is " + encryptedValue);
     }
 
     static String getValue()
@@ -24,18 +27,20 @@ public class Application {
         inputValue = input.nextLine();
         return inputValue;
     }
-}
 
-class Encrypter{
-
-    int digits[] = new int[4];
-
-
-    static String encrypt(String input)
+   static int[] swapFirstThirdandSecondFourth(int[] array)
     {
-        Encrypter encryptOut = new Encrypter();
+        int temp;
 
-        return input;
+        temp = array[0];
+        array[0] = array[2];
+        array[2] = temp;
+
+        temp = array[1];
+        array[1] = array[3];
+        array[3] = temp;
+        return array;
+
     }
 
     static int[] convertStringToArray(String stringIn)
@@ -50,6 +55,41 @@ class Encrypter{
 
     }
 
+    static String convertArrayToString(int[] array)
+    {
+        char charArray[] = new char[4];
+        int i;
+        for(i=0 ; i < 4 ; i++)
+        {
+             charArray[i] = (char)(array[i] + 48);
+        }
+        String stringOut = new String(charArray);
+        return stringOut;
+    }
+}
+
+class Encrypter
+{
+
+
+    static String encrypt(String input)
+    {
+        int digits[] = new int[4];
+        String encryptedOut;
+        digits = Application.convertStringToArray(input);
+
+        digits = firstEncrypt(digits);
+
+        digits = Application.swapFirstThirdandSecondFourth(digits);
+
+        encryptedOut = Application.convertArrayToString(digits);
+
+        return encryptedOut;
+
+    }
+
+
+
 
     static int addSevenModTen(int x)
     {
@@ -58,12 +98,12 @@ class Encrypter{
         return x;
     }
 
-    static Encrypter firstEncrypt(Encrypter in)
+    static int[] firstEncrypt(int in[])
     {
         int i;
         for(i=0; i < 4 ; i++)
         {
-            in.digits[i] = addSevenModTen(in.digits[i]);
+            in[i] = addSevenModTen(in[i]);
         }
         return in;
     }
