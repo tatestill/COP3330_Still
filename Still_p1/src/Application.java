@@ -7,7 +7,7 @@ public class Application
     public static void main(String[] args)
     {
         int choice = 1;
-        while(choice != 3)
+        while(choice != 3) //Loops until exit selection is made1
         {
             choice = getChoice();
             if (choice == 1) {
@@ -20,10 +20,11 @@ public class Application
         System.out.println("Goodbye!");
     }
 
-    static char getChoice()
+    static char getChoice() //Gets choice between encryption, decryption, and exiting
     {
         int inputValue;
         Scanner input = new Scanner(System.in);
+
         System.out.print("Enter 1 for encryption, 2 for decryption, or 3 to exit: ");
         while(true)
         {
@@ -34,88 +35,93 @@ public class Application
                 return 2;
             if (inputValue == 3)
                 return 3;
-            else
+            else //if not 1, 2, or 3 the value is invalid and will repeat the loop
                 System.out.print("Invalid entry, please enter 1 for encryption, 2 for decryption, or 3 to exit: ");
         }
 
     }
-    static String getEncryptionValue()
+    static String getEncryptionValue() //Gets value for encryption from user
     {
         String inputValue;
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter value for encryption: ");
         inputValue = input.nextLine();
+
         return inputValue;
     }
 
-    static String getDecryptionValue()
+    static String getDecryptionValue() //Gets value for decryption from user
     {
         String inputValue;
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter value for decryption: ");
         inputValue = input.nextLine();
+
         return inputValue;
     }
 
-    static void performEncryption()
+    static void performEncryption() //Gets value for encryption, encrypts it, and shows encrypted value
     {
-        String encryptedValue;
+        //Gets and encrypts value
         String inputValue = getEncryptionValue();
-        encryptedValue = Encrypter.encrypt(inputValue);
-
+        String encryptedValue = Encrypter.encrypt(inputValue);
+        //Shows user what was entered and shows what encrypted value is
         System.out.println("You entered " + inputValue);
         System.out.println("Encrypted value is " + encryptedValue + "\n");
     }
 
-    static void performDecryption()
+    static void performDecryption() //Gets value for decryption, decrypts it, and shows decrypted value
     {
-        String inputValue;
-        String decryptedValue;
-        inputValue = getDecryptionValue();
-        decryptedValue = Decrypter.decrypt(inputValue);
+        //Gets and decrypts value
+        String inputValue = getDecryptionValue();
+        String decryptedValue = Decrypter.decrypt(inputValue);
+        //Shows user what was entered and shows what decrypted value is
         System.out.println("You entered " + inputValue);
         System.out.println("Decrypted value is " + decryptedValue + "\n");
-
-
     }
 
-   static int[] swapFirstThirdandSecondFourth(int[] array)
+   static int[] swapFirstThirdandSecondFourth(int[] array) //Swaps the first and third values, and swaps the second and fourth values
     {
         int temp;
-
+        //Swaps first and third values
         temp = array[0];
         array[0] = array[2];
         array[2] = temp;
-
+        //Swaps second and fourth values
         temp = array[1];
         array[1] = array[3];
         array[3] = temp;
+
         return array;
 
     }
 
-    static int[] convertStringToArray(String stringIn)
+    static int[] convertStringToArray(String stringIn)//Takes String and converts it into integer array
     {
-        int[] arrayOut = new int[4];
+        int[] arrayOut = new int[4]; //Integer array that will take the values
         int i;
+
         for(i=0 ; i < 4 ; i++)
         {
-            arrayOut[i] = stringIn.charAt(i) - 48;
+            arrayOut[i] = stringIn.charAt(i) - 48; // Taking away 48 converts a number character into the integer equivalent
         }
+
         return arrayOut;
 
     }
 
-    static String convertArrayToString(int[] array)
+    static String convertArrayToString(int[] arrayIn)//Takes integer array and converts it into String
     {
-        char[] charArray = new char[4];
+        char[] charArray = new char[4]; //charArray that will take values and become string
         int i;
+
         for(i=0 ; i < 4 ; i++)
         {
-             charArray[i] = (char)(array[i] + 48);
+             charArray[i] = (char)(arrayIn[i] + 48); //Adding 48 converts an integer into its character equivalent
         }
+
         String stringOut = new String(charArray);
         return stringOut;
     }
@@ -129,66 +135,63 @@ class Encrypter
     {
         int[] digits;
         String encryptedOut;
+
         digits = Application.convertStringToArray(input);
-
         digits = firstEncrypt(digits);
-
         digits = Application.swapFirstThirdandSecondFourth(digits);
-
         encryptedOut = Application.convertArrayToString(digits);
 
         return encryptedOut;
 
     }
 
-    static int addSevenModTen(int x)
+    static int addSevenModTen(int x) //Takes integer value, adds seven and performs modulo ten;
     {
         x = x + 7;
         x = x % 10;
+
         return x;
     }
 
-    static int[] firstEncrypt(int[] in)
+    static int[] firstEncrypt(int[] array)//Encrypts values of array
     {
         int i;
+
         for(i=0; i < 4 ; i++)
         {
-            in[i] = addSevenModTen(in[i]);
+            array[i] = addSevenModTen(array[i]);
         }
-        return in;
+
+        return array;
     }
 
 }
 
 class Decrypter
 {
-    static String decrypt(String encryptedValue)
+    static String decrypt(String encryptedValue) //Takes encrypted string and returns decrypted string
     {
-        String decryptedValue;
         int[] encryptedArray;
 
         encryptedArray = Application.convertStringToArray(encryptedValue);
         encryptedArray = Application.swapFirstThirdandSecondFourth(encryptedArray);
         encryptedArray = finalDecrypt(encryptedArray);
-        decryptedValue = Application.convertArrayToString(encryptedArray);
+        String decryptedValue = Application.convertArrayToString(encryptedArray);
+
         return decryptedValue;
 
     }
 
-    static int[] finalDecrypt(int array[])
+    static int[] finalDecrypt(int[] array) //Performs main decryption
     {
         int i;
         for(i=0 ; i < 4 ; i++)
         {
-            if(array[i] < 7 )
+            if(array[i] < 7 ) //if value is below seven, it will have been % 10 and adding 10 will undo it
                 array[i] = array[i] + 10;
 
-            array[i] = array[i] - 7;
-
-
+            array[i] = array[i] - 7; //Takes away seven that was added during encryption
         }
-
         return array;
-
     }
 }
