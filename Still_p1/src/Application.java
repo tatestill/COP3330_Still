@@ -9,33 +9,34 @@ public class Application
         String inputValue;
         String encryptedValue;
         String decryptedValue;
-        int choice;
-
+        int choice = 1;
         Encrypter myEncrypter= new Encrypter();
         Decrypter myDecrypter = new Decrypter();
-        choice = getChoice();
-        if(choice == 1)
+        while(choice != 3)
         {
-            inputValue = getEncryptionValue();
-            encryptedValue = myEncrypter.encrypt(inputValue);
+            choice = getChoice();
+            if (choice == 1) {
+                inputValue = getEncryptionValue();
+                encryptedValue = myEncrypter.encrypt(inputValue);
 
-            System.out.println("You entered " + inputValue);
-            System.out.println("Encrypted value is " + encryptedValue);
+                System.out.println("You entered " + inputValue);
+                System.out.println("Encrypted value is " + encryptedValue + "\n");
+            }
+            if (choice == 2) {
+                inputValue = getDecryptionValue();
+                decryptedValue = myDecrypter.decrypt(inputValue);
+                System.out.println("You entered " + inputValue);
+                System.out.println("Decrypted value is " + decryptedValue + "\n");
+            }
         }
-        else
-        {
-            inputValue = getDecryptionValue();
-            decryptedValue = myDecrypter.decrypt(inputValue);
-            System.out.println("You entered " + inputValue);
-            System.out.println("Decrypted value is " + decryptedValue);
-        }
+        System.out.println("Goodbye!");
     }
 
     static char getChoice()
     {
         int inputValue;
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter 1 for encryption and 2 for decryption: ");
+        System.out.print("Enter 1 for encryption, 2 for decryption, or 3 to exit: ");
         while(true)
         {
             inputValue = input.nextInt();
@@ -43,8 +44,10 @@ public class Application
                 return 1;
             if (inputValue == 2)
                 return 2;
+            if (inputValue == 3)
+                return 3;
             else
-                System.out.print("Invalid entry, please enter 1 for encryption and 2 for decryption: ");
+                System.out.print("Invalid entry, please enter 1 for encryption, 2 for decryption, or 3 to exit: ");
         }
 
     }
