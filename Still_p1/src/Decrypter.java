@@ -1,19 +1,19 @@
 public class Decrypter
 {
-    static String decrypt(String encryptedValue) //Takes encrypted string and returns decrypted string
+    public String decrypt(String encryptedValue) //Takes encrypted string and returns decrypted string
     {
         int[] encryptedArray;
 
-        encryptedArray = Application.convertStringToArray(encryptedValue);
-        encryptedArray = Application.swapFirstThirdandSecondFourth(encryptedArray);
+        encryptedArray = convertStringToArray(encryptedValue);
+        encryptedArray = swapFirstThirdandSecondFourth(encryptedArray);
         encryptedArray = finalDecrypt(encryptedArray);
-        String decryptedValue = Application.convertArrayToString(encryptedArray);
+        String decryptedValue = convertArrayToString(encryptedArray);
 
         return decryptedValue;
 
     }
 
-    static int[] finalDecrypt(int[] array) //Performs main decryption
+    public static int[] finalDecrypt(int[] array) //Performs main decryption
     {
         int i;
         for(i=0 ; i < 4 ; i++)
@@ -25,4 +25,49 @@ public class Decrypter
         }
         return array;
     }
+
+    public static int[] swapFirstThirdandSecondFourth(int[] array) //Swaps the first and third values, and swaps the second and fourth values
+    {
+        int temp;
+        //Swaps first and third values
+        temp = array[0];
+        array[0] = array[2];
+        array[2] = temp;
+        //Swaps second and fourth values
+        temp = array[1];
+        array[1] = array[3];
+        array[3] = temp;
+
+        return array;
+
+    }
+
+    public static int[] convertStringToArray(String stringIn)//Takes String and converts it into integer array
+    {
+        int[] arrayOut = new int[4]; //Integer array that will take the values
+        int i;
+
+        for(i=0 ; i < 4 ; i++)
+        {
+            arrayOut[i] = stringIn.charAt(i) - 48; // Taking away 48 converts a number character into the integer equivalent
+        }
+
+        return arrayOut;
+
+    }
+
+    public static String convertArrayToString(int[] arrayIn)//Takes integer array and converts it into String
+    {
+        char[] charArray = new char[4]; //charArray that will take values and become string
+        int i;
+
+        for(i=0 ; i < 4 ; i++)
+        {
+            charArray[i] = (char)(arrayIn[i] + 48); //Adding 48 converts an integer into its character equivalent
+        }
+
+        String stringOut = new String(charArray);
+        return stringOut;
+    }
 }
+
