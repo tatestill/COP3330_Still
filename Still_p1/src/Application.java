@@ -4,7 +4,7 @@ import java.util.*;
 public class Application
 {
 
-    public static void main(String[] args)
+   static void main(String[] args)
     {
         int choice = 1;
         while(choice != 3) //Loops until exit selection is made1
@@ -82,7 +82,7 @@ public class Application
         System.out.println("Decrypted value is " + decryptedValue + "\n");
     }
 
-   static int[] swapFirstThirdandSecondFourth(int[] array) //Swaps the first and third values, and swaps the second and fourth values
+     public static int[] swapFirstThirdandSecondFourth(int[] array) //Swaps the first and third values, and swaps the second and fourth values
     {
         int temp;
         //Swaps first and third values
@@ -98,7 +98,7 @@ public class Application
 
     }
 
-    static int[] convertStringToArray(String stringIn)//Takes String and converts it into integer array
+    public static int[] convertStringToArray(String stringIn)//Takes String and converts it into integer array
     {
         int[] arrayOut = new int[4]; //Integer array that will take the values
         int i;
@@ -112,7 +112,7 @@ public class Application
 
     }
 
-    static String convertArrayToString(int[] arrayIn)//Takes integer array and converts it into String
+    public static String convertArrayToString(int[] arrayIn)//Takes integer array and converts it into String
     {
         char[] charArray = new char[4]; //charArray that will take values and become string
         int i;
@@ -127,71 +127,5 @@ public class Application
     }
 }
 
-class Encrypter
-{
 
 
-    static String encrypt(String input)
-    {
-        int[] digits;
-        String encryptedOut;
-
-        digits = Application.convertStringToArray(input);
-        digits = firstEncrypt(digits);
-        digits = Application.swapFirstThirdandSecondFourth(digits);
-        encryptedOut = Application.convertArrayToString(digits);
-
-        return encryptedOut;
-
-    }
-
-    static int addSevenModTen(int x) //Takes integer value, adds seven and performs modulo ten;
-    {
-        x = x + 7;
-        x = x % 10;
-
-        return x;
-    }
-
-    static int[] firstEncrypt(int[] array)//Encrypts values of array
-    {
-        int i;
-
-        for(i=0; i < 4 ; i++)
-        {
-            array[i] = addSevenModTen(array[i]);
-        }
-
-        return array;
-    }
-
-}
-
-class Decrypter
-{
-    static String decrypt(String encryptedValue) //Takes encrypted string and returns decrypted string
-    {
-        int[] encryptedArray;
-
-        encryptedArray = Application.convertStringToArray(encryptedValue);
-        encryptedArray = Application.swapFirstThirdandSecondFourth(encryptedArray);
-        encryptedArray = finalDecrypt(encryptedArray);
-        String decryptedValue = Application.convertArrayToString(encryptedArray);
-
-        return decryptedValue;
-
-    }
-
-    static int[] finalDecrypt(int[] array) //Performs main decryption
-    {
-        int i;
-        for(i=0 ; i < 4 ; i++)
-        {
-            if(array[i] < 7 ) //if value is below seven, it will have been % 10 and adding 10 will undo it
-                array[i] = array[i] + 10;
-
-            array[i] = array[i] - 7; //Takes away seven that was added during encryption
-        }
-        return array;
-    }
-}
