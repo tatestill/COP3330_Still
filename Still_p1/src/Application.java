@@ -13,21 +13,32 @@ public class Application
         Encrypter myEncrypter= new Encrypter();
         Decrypter myDecrypter = new Decrypter();
 
-        inputValue = getValue();
+        inputValue = getEncryptionValue();
         encryptedValue = myEncrypter.encrypt(inputValue);
 
         System.out.println("You entered " + inputValue);
         System.out.println("Encrypted value is " + encryptedValue);
-        decryptedValue = myDecrypter.decrypt(encryptedValue);
+        inputValue = getDecryptionValue();
+        decryptedValue = myDecrypter.decrypt(inputValue);
         System.out.println("Decrypted value is " + decryptedValue);
     }
 
-    static String getValue()
+    static String getEncryptionValue()
     {
         String inputValue;
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter value for encryption: ");
+        inputValue = input.nextLine();
+        return inputValue;
+    }
+
+    static String getDecryptionValue()
+    {
+        String inputValue;
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Enter value for decryption: ");
         inputValue = input.nextLine();
         return inputValue;
     }
