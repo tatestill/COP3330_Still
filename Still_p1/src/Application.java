@@ -3,6 +3,8 @@ import java.util.*;
 
 public class Application {
 
+    private static Scanner input = new Scanner(System.in);
+
     public static void main(String[] args) {
 
        int choice = 1;
@@ -42,7 +44,6 @@ public class Application {
     static String getEncryptionValue() //Gets value for encryption from user
     {
         String inputValue;
-        Scanner input = new Scanner(System.in);
 
         System.out.print("Enter value for encryption: ");
         inputValue = input.nextLine();
@@ -54,7 +55,6 @@ public class Application {
     {
 
         String inputValue;
-        Scanner input = new Scanner(System.in);
 
         System.out.print("Enter value for decryption: ");
         inputValue = input.nextLine();
