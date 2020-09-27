@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BodyMassIndexTest {
     @Test
-    public void testGetHeight()
+    public void test()
     {
         BodyMassIndex bmiTest = new BodyMassIndex();
+
     }
 
 }

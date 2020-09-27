@@ -5,7 +5,7 @@ public class BodyMassIndex {
     private double weight;
     private Scanner input = new Scanner(System.in);
 
-    public static void displayBmiInfo(ArrayList<BodyMassIndex> bmi)
+    public static void displayBmiInfo(BodyMassIndex bmi)
     {
 
 

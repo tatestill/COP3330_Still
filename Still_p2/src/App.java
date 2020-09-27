@@ -25,7 +25,7 @@ public class App {
 
     private static boolean moreInput()
     {
-        int keepGoing;
+        char keepGoing;
         if(first)
         {
             System.out.println("Welcome to the Body Mass Index Calculator");
@@ -33,14 +33,16 @@ public class App {
             return true;
         }
 
-        System.out.print("Enter 1 to perform another BMI calculation, and 0 to end and display statistics : ");
-        keepGoing = input.nextInt();
-        while(keepGoing != 1 && keepGoing != 0)
+        System.out.print("Would you like to perform another BMI calculation? Enter Y/N : ");
+        keepGoing = input.next().charAt(0);
+        input.nextLine();
+        while(keepGoing != 'Y' && keepGoing != 'N')
         {
-            System.out.print("Invalid input, please enter 1 or 0 : ");
-            keepGoing = input.nextInt();
+            System.out.print("Invalid input, please enter Y or N : " + keepGoing);
+            keepGoing = input.next().charAt(0);
+            input.nextLine();
         }
-        return (keepGoing == 1);
+        return (keepGoing == 'Y');
     }
 
     private static double getUserHeight()
