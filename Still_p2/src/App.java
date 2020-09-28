@@ -11,16 +11,15 @@ public class App {
         while (moreInput()) {
             double height = getUserHeight();
             double weight = getUserWeight();
-            System.out.print("User height is " + height + "\nUserweight is " + weight);
-/*
+
             BodyMassIndex bmi = new BodyMassIndex(height, weight);
             bmiData.add(bmi);
 
-            displayBmiInfo(bmi);*/
-            System.out.println("\n\nMain Function running!\nMain Function running!\n");
+            displayBmiInfo(bmi);
+
         }
 
-        //displayBmiStatistics(bmiData);
+        displayBmiStatistics(bmiData);
     }
 
     private static boolean moreInput()
@@ -33,12 +32,12 @@ public class App {
             return true;
         }
 
-        System.out.print("Would you like to perform another BMI calculation? Enter Y/N : ");
+        System.out.print("\nWould you like to perform another BMI calculation? Enter Y/N : ");
         keepGoing = input.next().charAt(0);
         input.nextLine();
         while(keepGoing != 'Y' && keepGoing != 'N')
         {
-            System.out.print("Invalid input, please enter Y or N : " + keepGoing);
+            System.out.print("Invalid input, please enter Y or N : ");
             keepGoing = input.next().charAt(0);
             input.nextLine();
         }
@@ -50,9 +49,9 @@ public class App {
         double height;
         System.out.print("Please enter height in inches for BMI calculation : ");
                 height = input.nextDouble();
-        while(height < 0)
+        while(height <= 0)
         {
-            System.out.print("Negative number entered. Please enter a positive number for height: ");
+            System.out.print("Negative or zero number entered. Please enter a positive nonzero number for height: ");
             height = input.nextDouble();
         }
         return height;
@@ -63,11 +62,31 @@ public class App {
         double weight;
         System.out.print("Please enter weight in pounds for BMI calculation : ");
         weight = input.nextDouble();
-        while(weight < 0)
+        while(weight <= 0)
         {
-            System.out.print("Negative number entered. Please enter a positive number for weight: ");
+            System.out.print("Negative or zero number entered. Please enter a positive nonzero number for weight: ");
             weight = input.nextDouble();
         }
         return weight;
+    }
+
+    private static void displayBmiInfo(BodyMassIndex bmi)
+    {
+        System.out.println("Your BMI(Body Mass Index) is : " + bmi.calculateBMI());
+        System.out.println("Your BMI category is : " + bmi.categoryBMI());
+        return;
+    }
+
+    private static void displayBmiStatistics(ArrayList<BodyMassIndex> bmiData)
+    {
+        int i;
+        double avg = 0;
+        for(i=0 ; i < bmiData.size() ; i++)
+        {
+            avg = avg + bmiData.get(i).calculateBMI();
+        }
+        avg = avg / bmiData.size();
+        avg = Math.round(avg*10.0)/10.0;
+        System.out.print("Thank you for using the Body Mass Index Calculator\nThe average BMI of this session was : " + avg);
     }
 }
