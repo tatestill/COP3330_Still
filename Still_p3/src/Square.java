@@ -6,12 +6,12 @@ public class Square extends Shape2D
         this.side = s;
     }
 
-    String getName()
+    public String getName()
     {
         return "square";
     }
 
-    double getArea()
+    public double getArea()
     {
         return (side * side);
     }

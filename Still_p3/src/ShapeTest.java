@@ -20,4 +20,22 @@ class ShapeTest
         Shape2D shape = new Square(0.5);
         assertEquals(0.25, shape.getArea());
     }
+
+    @Test
+    public void testTriangleName() {
+        Shape shape = new Triangle(100,100);
+        assertEquals("triangle",shape.getName());
+    }
+
+    @Test
+    public void testTriangleArea() {
+        Shape2D shape = new Triangle(10,10);
+        assertEquals(50, shape.getArea());
+    }
+
+    @Test
+    public void testTriangleArea2() {
+        Shape2D shape = new Triangle(0.5,0.25);
+        assertEquals(0.063, shape.getArea(), 0.001);
+    }
 }
