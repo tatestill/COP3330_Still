@@ -1,4 +1,4 @@
-abstract class Shape
+public abstract class Shape
 {
-    abstract public String getName();
+    public abstract String getName();
 }
