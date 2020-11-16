@@ -121,21 +121,14 @@ public class TaskList{
 
             // }
         }
-        catch(FileAlreadyExistsException e)
+
+        catch (IOException e)
         {
             return 0;
         }
-        catch(IndexOutOfBoundsException e)
-        {
-            return -1;
-        }
-        catch (IOException e)
-        {
-            return -2;
-        }
     }
 
-    public int loadList( String name)
+    public int loadList(String name)
     {
         FileInputStream in = null;
         ObjectInputStream objectIn = null;

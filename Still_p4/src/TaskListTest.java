@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TaskListTest {
 
@@ -159,7 +160,7 @@ public class TaskListTest {
         TaskList testList = new TaskList();
         testList.addTask("Title", "Desc", "2020-12-31");
         testList.setCompletedAtIndex(0, true);
-        assertEquals(true, testList.List.get(0).isCompleted());
+        assertTrue(testList.List.get(0).isCompleted());
     }
 
     @Test

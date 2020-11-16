@@ -30,21 +30,17 @@ public class TaskItem implements Serializable{
 
     public int editTitle(String newTitle) //Edit methods return 1 if successful 0 if not
     {
-        if(isTitleValid(newTitle))
-            this.title = newTitle;
-        else
-        {
+        if(!isTitleValid(newTitle))
             return 0;
-        }
+        this.title = newTitle;
         return 1;
     }
 
     public int editDueDate(String newDate)
     {
-        if(isDueDateValid(newDate))
-            this.dueDate = newDate;
-        else
+        if(!isDueDateValid(newDate))
             return 0;
+        this.dueDate = newDate;
         return 1;
     }
 
@@ -79,6 +75,11 @@ public class TaskItem implements Serializable{
         i++;
         if(!Character.isDigit(newDate.charAt(i)))
             return false;
+       if(newDate.charAt(i-1) == '1')
+       {
+           if(newDate.charAt(i) != '0' && newDate.charAt(i) != '1' && newDate.charAt(i) != '2')
+               return false;
+       }
         i++;
         if(newDate.charAt(i) != '-')
             return false;
@@ -88,6 +89,11 @@ public class TaskItem implements Serializable{
         i++;
         if(!Character.isDigit(newDate.charAt(i)))
            return false;
+       if(newDate.charAt(i-1) == '3')
+       {
+           if(newDate.charAt(i) != '0' && newDate.charAt(i) != '1')
+               return false;
+       }
         return true;
    }
 

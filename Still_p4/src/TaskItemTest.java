@@ -26,6 +26,18 @@ public class TaskItemTest {
     }
 
     @Test
+    public void taskItemsFailsWithInvalidDueDateMonth()
+    {
+        assertEquals(false, TaskItem.isDueDateValid("2020-13-09"));
+    }
+
+    @Test
+    public void taskItemsFailsWithInvalidDueDateDay()
+    {
+        assertEquals(false, TaskItem.isDueDateValid("2020-09-41"));
+    }
+
+    @Test
     public void taskItemsSucceedsWithValidDueDate()
     {
         assertEquals(true, TaskItem.isDueDateValid("2020-12-23"));
