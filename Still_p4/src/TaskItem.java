@@ -1,6 +1,6 @@
 import java.util.Scanner;
-
-public class TaskItem {
+import java.io.*;
+public class TaskItem implements Serializable{
 
     private String title;
     private String desc;

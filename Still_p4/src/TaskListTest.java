@@ -107,12 +107,79 @@ public class TaskListTest {
     }
 
     @Test
-    public void getTitleOfTaskAtInvalidIndex()
+    public void failIfGettingTitleOfTaskAtInvalidIndex()
     {
         TaskList testList = new TaskList();
         testList.addTask("Title", "Desc", "2020-12-31");
         testList.addTask("Title", "Desc", "2020-12-31");
         assertEquals("", testList.getTaskTitle(3));
     }
+
+    @Test
+    public void getDescOfTaskAtValidIndex()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Not this one", "Not the one being aimed for", "2020-12-31");
+        testList.addTask("This one", "The one being aimed for", "2020-12-31");
+        testList.addTask("Not this one", "Not the one being aimed for", "2020-12-31");
+        assertEquals("The one being aimed for", testList.getTaskDesc(1));
+    }
+
+    @Test
+    public void failIfGettingDescOfTaskAtInvalidIndex()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Title", "Desc", "2020-12-31");
+        testList.addTask("Title", "Desc", "2020-12-31");
+        assertEquals("~~~", testList.getTaskDesc(3));
+    }
+
+    @Test
+    public void getDueDateOfTaskAtValidIndex()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Not this one", "Not the one being aimed for", "2020-12-31");
+        testList.addTask("This one", "The one being aimed for", "2021-09-22");
+        testList.addTask("Not this one", "Not the one being aimed for", "2020-12-31");
+        assertEquals("2021-09-22", testList.getTaskDueDate(1));
+    }
+
+    @Test
+    public void failIfGettingDueDateOfTaskAtInvalidIndex()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Title", "Desc", "2020-12-31");
+        testList.addTask("Title", "Desc", "2020-12-31");
+        assertEquals("", testList.getTaskDueDate(3));
+    }
+
+    @Test
+    public void SetCompletedTaskAtValidIndex()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Title", "Desc", "2020-12-31");
+        testList.setCompletedAtIndex(0, true);
+        assertEquals(true, testList.List.get(0).isCompleted());
+    }
+
+    @Test
+    public void FailsToSetCompletedTaskAtInvalidIndex()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Title", "Desc", "2020-12-31");
+        assertEquals(0, testList.setCompletedAtIndex(3, true));
+    }
+
+    @Test
+    public void ListLoadsFromSave()
+    {
+        TaskList testList = new TaskList();
+        testList.addTask("Title", "Desc", "2020-12-31");
+        testList.saveList("List.txt");
+        TaskList newTestList = new TaskList();
+        newTestList.loadList("List.txt");
+        assertEquals(testList.List.get(0).getTitle(), newTestList.List.get(0).getTitle());
+    }
+
 }
 
