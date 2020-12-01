@@ -104,6 +104,19 @@ public class TaskList{
 
     public int saveList( String name)
     {
+
+        File saveFile = new File(name);
+        try {
+            if (saveFile.createNewFile()) {
+                return writeToFile(name);
+            } else
+                return 0;
+        }
+        catch(IOException e) {
+            return -1;
+        }
+
+        /*
         FileOutputStream out = null;
         ObjectOutputStream objectOut;
         int i;
@@ -126,10 +139,35 @@ public class TaskList{
         {
             return 0;
         }
+
+         */
+    }
+
+    public int writeToFile(String name)
+    {
+        int i;
+        try {
+            FileWriter out = new FileWriter(name);
+            for(i = 0; i < this.List.size() ; i++)
+            {
+                out.write(this.List.get(i).getTitle() + "\n");
+                out.write(this.List.get(i).getDesc() + "\n");
+                out.write(this.List.get(i).getDueDate() + "\n");
+            }
+            out.close();
+            return 1;
+        }
+        catch(IOException e)
+        {
+           return -1;
+        }
     }
 
     public int loadList(String name)
     {
+            File inFile = new File(name);
+            return readFile(inFile);
+        /*
         FileInputStream in = null;
         ObjectInputStream objectIn = null;
         int i;
@@ -155,6 +193,29 @@ public class TaskList{
         {
 
             return -2;
+        }
+         */
+    }
+
+    private int readFile(File inFile)
+    {
+        try
+        {
+            Scanner in = new Scanner(inFile);
+            while( in.hasNextLine())
+            {
+                this.List.add( new TaskItem(in.nextLine(), in.nextLine(), in.nextLine()));
+            }
+            in.close();
+            return 1;
+        }
+        catch(FileNotFoundException e)
+        {
+            return 0;
+        }
+        catch(IOException e)
+        {
+            return -1;
         }
     }
 }

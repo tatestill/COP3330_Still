@@ -180,6 +180,8 @@ public class TaskListTest {
         TaskList newTestList = new TaskList();
         newTestList.loadList("List.txt");
         assertEquals(testList.List.get(0).getTitle(), newTestList.List.get(0).getTitle());
+        assertEquals(testList.List.get(0).getDesc(), newTestList.List.get(0).getDesc());
+        assertEquals(testList.List.get(0).getDueDate(), newTestList.List.get(0).getDueDate());
     }
 
 }
