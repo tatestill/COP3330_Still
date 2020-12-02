@@ -1,24 +1,27 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class App {
+public abstract class App {
 
     public static void main(String[] args)
     {
+        contactOrTaskChoice();
+    }
+
+    static void contactOrTaskChoice()
+    {
         boolean loop = true;
-        TaskList listTasks = new TaskList();
+
         while(loop)
         {
             printOptionsMainMenu();
             switch(getInput())
             {
                 case 1 :
-                    listTasks = new TaskList();
-                    listOperationMenu(listTasks);
+                    TaskApp.main();
                     break;
                 case 2 :
-                    if(performLoad(listTasks))
-                        listOperationMenu(listTasks);
+                    ContactApp.main();
                     break;
                 case 3 :
                     loop = false;
@@ -31,41 +34,6 @@ public class App {
 
     static void listOperationMenu(TaskList listTasks)
     {
-        boolean loop = true;
-
-        while(loop)
-        {
-            printOptionsListOperationMenu();
-            switch(getInput())
-            {
-                case 1 :
-                    displayList(listTasks);
-                    break;
-                case 2 :
-                    performAdd(listTasks);
-                    break;
-                case 3 :
-                    performEdit(listTasks);
-                    break;
-                case 4 :
-                    performRemove(listTasks);
-                    break;
-                case 5 :
-                    performMarkCompleted(listTasks);
-                    break;
-                case 6 :
-                    performMarkUncompleted(listTasks);
-                    break;
-                case 7 :
-                    performSave(listTasks);
-                    break;
-                case 8 :
-                    loop = false;
-                    break;
-                default :
-                    System.out.print("Invalid input, please try again");
-            }
-        }
     }
 
 
@@ -89,11 +57,12 @@ public class App {
     }
     static void printOptionsMainMenu()
     {
-        System.out.print("\nMain Menu \n ---------------\n\n");
-        System.out.println("1) create a new list");
-        System.out.println("2) load an existing");
+        System.out.print("\nSelect your Application \n ---------------\n\n");
+        System.out.println("1) task list");
+        System.out.println("2) contact list");
         System.out.println("3) quit");
     }
+
     static int getInput()
     {
         System.out.print("\nEnter your choice : ");
@@ -113,148 +82,21 @@ public class App {
         }
     }
 
-    static void performAdd(TaskList listTasks)
+    static void performAdd()
     {
-        Scanner in = new Scanner(System.in);
-        String title, desc, date;
-        System.out.print("Task title: ");
-        title = in.nextLine();
-        System.out.print("Task description: ");
-        desc = in.nextLine();
-        System.out.print("Task due date (YYYY-MM-DD): ");
-        date = in.nextLine();
-        switch(listTasks.addTask(title, desc, date))
-        {
-            case 1 :
-                return;
-            case -1 :
-                System.out.println("ERROR: Title must be one or more characters in length, task not created");
-                return;
-            case -2 :
-                System.out.println("ERROR: Invalid due date, task not created");
-        }
-
-    }
-    static void performEdit(TaskList listTasks)
-    {
-        if(listTasks.List.size() == 0)
-        {
-            System.out.println("Task list is empty, cannot perform function");
-            return;
-        }
-        Scanner in = new Scanner(System.in);
-        String title, desc, date;
-        int index;
-        displayList(listTasks);
-        System.out.print("Which task will you edit? ");
-        index = getIndex();
-        System.out.print("Enter a new title for task " + index + ": ");
-        title = in.nextLine();
-        System.out.print("Enter a new description for task " + index + ": ");
-        desc = in.nextLine();
-        System.out.print("Enter a new task due date (YYYY-MM-DD): ");
-        date = in.nextLine();
-        switch(listTasks.editTask(index, title, desc, date))
-        {
-            case 1 :
-                return;
-            case 0 :
-                System.out.println("ERROR: No task at index " + index);
-                return;
-            case -1 :
-                System.out.println("ERROR: Title must be one or more characters in length, task not edited");
-                return;
-            case -2 :
-                System.out.println("ERROR: Invalid due date, task not edited");
-        }
     }
 
-    static void performRemove(TaskList listTasks)
+
+    static void performEdit()
     {
-        if(listTasks.List.size() == 0)
-        {
-            System.out.println("Task list is empty, cannot perform function");
-            return;
-        }
-        int index;
-        displayList(listTasks);
-        System.out.print("Which task will you remove? ");
-        index = getIndex();
-        switch (listTasks.removeTask(index))
-        {
-            case 1:
-                return;
-            case 0:
-                System.out.println("ERROR: No task at index " + index);
-        }
     }
 
-    static void performMarkCompleted(TaskList listTasks)
+    static void performRemove()
     {
-        if(listTasks.List.size() == 0)
-        {
-            System.out.println("Task list is empty, cannot perform function");
-            return;
-        }
-        displayCompleted(listTasks, false);
-        int index;
-        System.out.print("Which class do you want marked completed? ");
-        index = getIndex();
-        switch (listTasks.setCompletedAtIndex(index, true))
-        {
-            case 1:
-                return;
-            case 0:
-                System.out.println("ERROR: No task at index " + index);
-        }
-    }
-    static void performMarkUncompleted(TaskList listTasks)
-    {
-        displayCompleted(listTasks, true);
-        int index;
-        System.out.print("Which class do you want marked uncompleted? ");
-        index = getIndex();
-        switch (listTasks.setCompletedAtIndex(index, false))
-        {
-            case 1:
-                return;
-            case 0:
-                System.out.println("ERROR: No task at index " + index);
-        }
     }
 
-    static void displayCompleted(TaskList listTasks, boolean completed)
+    static void performSave()
     {
-        int i;
-        if(completed)
-            System.out.println("\nCompleted Tasks");
-        else
-            System.out.println("\nUncompleted Tasks");
-        System.out.println("------------");
-        for( i = 0 ; i < listTasks.List.size() ; i++)
-        {
-            if(listTasks.List.get(i).isCompleted() == completed)
-            {
-                System.out.print(i+") ");
-                if(completed)
-                    System.out.print("*** ");
-                System.out.println("[" + listTasks.List.get(i).getDueDate() + "] " + listTasks.List.get(i).getTitle() + ": " + listTasks.List.get(i).getDesc());
-            }
-        }
-    }
-    static void performSave(TaskList listTasks)
-    {
-        Scanner in = new Scanner(System.in);
-        String name;
-        System.out.print("Enter filename: ");
-        name = in.next();
-        switch (listTasks.saveList(name))
-        {
-            case 1:
-                return;
-            case 0:
-                System.out.println("ERROR: IO Exception ");
-        }
     }
 
     static int getIndex()

@@ -3,10 +3,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-public class TaskList{
+public class TaskList extends List{
     ArrayList<TaskItem> List = new ArrayList<TaskItem>();
 
-    public int addTask(String newTitle, String newDesc, String newDate)//Add task method returns -1 or -2 if unsuccessful, 1 if successful
+    public int addItem(String newTitle, String newDesc, String newDate)//Add task method returns -1 or -2 if unsuccessful, 1 if successful
     {
         if(!TaskItem.isTitleValid(newTitle))
             return -1;
@@ -18,8 +18,10 @@ public class TaskList{
 
     }
 
-    public int editTask(int index, String newTitle, String newDesc, String newDate)
+    public int editItem(int index, String newTitle, String newDesc, String newDate)
     {
+        if(this.List.size() == 0)
+            return -2;
         try
         {
             if(!TaskItem.isTitleValid(newTitle))
@@ -40,7 +42,7 @@ public class TaskList{
         return 1;
     }
 
-    public int removeTask(int index) //remove task returns 1 if removed successfully 0 if not
+    public int removeItem(int index) //remove task returns 1 if removed successfully 0 if not
     {
         try
         {
@@ -91,6 +93,8 @@ public class TaskList{
 
     public int setCompletedAtIndex(int index, boolean complete) //Returns 1 if successful, 0 if fails
     {
+        if(this.List.size() == 0)
+            return -2;
         try
         {
             this.List.get(index).markCompletion(complete);
@@ -104,7 +108,8 @@ public class TaskList{
 
     public int saveList( String name)
     {
-
+        if(this.List.size() == 0)
+            return -2;
         File saveFile = new File(name);
         try {
             if (saveFile.createNewFile()) {
@@ -115,35 +120,9 @@ public class TaskList{
         catch(IOException e) {
             return -1;
         }
-
-        /*
-        FileOutputStream out = null;
-        ObjectOutputStream objectOut;
-        int i;
-        try
-        {
-            out = new FileOutputStream(name);
-            objectOut = new ObjectOutputStream(out);
-            objectOut.writeObject(List);
-            objectOut.close();
-            out.close();
-            return 1;
-            //for(i=0; i < this.List.size() ; i++)
-            //{
-            //out.write(i + ") ["+ this.List.get(i).getDueDate() + "]" + this.List.get(i).getTitle() + ": " + this.List.get(i).getDesc());
-
-            // }
-        }
-
-        catch (IOException e)
-        {
-            return 0;
-        }
-
-         */
     }
 
-    public int writeToFile(String name)
+    private int writeToFile(String name)
     {
         int i;
         try {
@@ -167,34 +146,6 @@ public class TaskList{
     {
             File inFile = new File(name);
             return readFile(inFile);
-        /*
-        FileInputStream in = null;
-        ObjectInputStream objectIn = null;
-        int i;
-        try
-        {
-            in = new FileInputStream(name);
-            objectIn = new ObjectInputStream(in);
-            List = (ArrayList<TaskItem>) objectIn.readObject();
-
-            return 1;
-        }
-        catch(FileNotFoundException e)
-        {
-
-            return 0;
-        }
-        catch(IOException e)
-        {
-            System.out.print(e.getMessage());
-            return -1;
-        }
-        catch (ClassNotFoundException e)
-        {
-
-            return -2;
-        }
-         */
     }
 
     private int readFile(File inFile)
@@ -204,7 +155,7 @@ public class TaskList{
             Scanner in = new Scanner(inFile);
             while( in.hasNextLine())
             {
-                this.List.add( new TaskItem(in.nextLine(), in.nextLine(), in.nextLine()));
+                addItem(in.nextLine(), in.nextLine(), in.nextLine());
             }
             in.close();
             return 1;
@@ -218,4 +169,5 @@ public class TaskList{
             return -1;
         }
     }
+
 }
