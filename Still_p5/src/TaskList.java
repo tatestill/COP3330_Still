@@ -117,6 +117,10 @@ public class TaskList extends List{
             } else
                 return 0;
         }
+        catch(FileAlreadyExistsException e)
+        {
+            return 0;
+        }
         catch(IOException e) {
             return -1;
         }
@@ -127,6 +131,7 @@ public class TaskList extends List{
         int i;
         try {
             FileWriter out = new FileWriter(name);
+            out.write("Task\n");
             for(i = 0; i < this.List.size() ; i++)
             {
                 out.write(this.List.get(i).getTitle() + "\n");
@@ -153,6 +158,12 @@ public class TaskList extends List{
         try
         {
             Scanner in = new Scanner(inFile);
+            if(in.hasNextLine()) {
+                String isRightType = in.nextLine();
+                if (isRightType.compareTo("Task") != 0) {
+                    return 0;
+                }
+            }
             while( in.hasNextLine())
             {
                 addItem(in.nextLine(), in.nextLine(), in.nextLine());
@@ -163,10 +174,6 @@ public class TaskList extends List{
         catch(FileNotFoundException e)
         {
             return 0;
-        }
-        catch(IOException e)
-        {
-            return -1;
         }
     }
 

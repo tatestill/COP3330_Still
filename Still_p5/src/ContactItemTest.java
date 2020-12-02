@@ -65,4 +65,5 @@ public class ContactItemTest {
         assertEquals("123-456-7890", testItem.getPhoneNumber());
         assertEquals("me@email.com", testItem.getEmailAddress());
     }
+
 }

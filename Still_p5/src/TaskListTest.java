@@ -184,5 +184,16 @@ public class TaskListTest {
         assertEquals(testList.List.get(0).getDueDate(), newTestList.List.get(0).getDueDate());
     }
 
+    @Test
+    public void doesNotLoadWrongSavedListOfOtherType()
+    {
+        ContactList testList = new ContactList();
+        testList.addItem("t8", "still", "123-456-7890", "me@email.com");
+        testList.saveList("test2.txt");
+        TaskList testList2 = new TaskList();
+        assertEquals(0, testList2.loadList("test2.txt"));
+
+    }
+
 }
 

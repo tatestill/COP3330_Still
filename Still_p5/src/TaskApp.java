@@ -250,6 +250,8 @@ public class TaskApp extends App{
             case 1:
                 return;
             case 0:
+                System.out.println("ERROR: File already exists ");
+            case -1:
                 System.out.println("ERROR: IO Exception ");
             case -2 :
                 System.out.println("ERROR: Task List is empty ");

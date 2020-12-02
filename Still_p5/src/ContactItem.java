@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public class ContactItem {
     private String firstName;
     private String lastName;
@@ -44,4 +46,5 @@ public class ContactItem {
     {
         return ( (first == "") && (last == "") && (phone == "") && (email == "") );
     }
+
 }

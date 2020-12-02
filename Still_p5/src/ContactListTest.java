@@ -137,10 +137,20 @@ public class ContactListTest {
         testList.saveList("test.txt");
         ContactList testList2 = new ContactList();
         testList2.loadList("test.txt");
-        assertEquals(2, testList.List.size());
-        assertEquals("t8", testList.List.get(0).getFirstName());
-        assertEquals("still", testList.List.get(0).getLastName());
-        assertEquals("123-456-7890", testList.List.get(0).getPhoneNumber());
-        assertEquals("me@email.com", testList.List.get(0).getEmailAddress());
+        assertEquals(2, testList2.List.size());
+        assertEquals("t8", testList2.List.get(0).getFirstName());
+        assertEquals("still", testList2.List.get(0).getLastName());
+        assertEquals("123-456-7890", testList2.List.get(0).getPhoneNumber());
+        assertEquals("me@email.com", testList2.List.get(0).getEmailAddress());
+    }
+
+    @Test
+    public void doesNotLoadWrongSavedListOfOtherType()
+    {
+        TaskList testList = new TaskList();
+        testList.addItem("Title", "Desc", "2020-12-31");
+        testList.saveList("List.txt");
+        ContactList testList2 = new ContactList();
+        assertEquals(0, testList2.loadList("List.txt"));
     }
 }

@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -30,12 +31,12 @@ public class ContactList {
                 this.List.set(index, tempItem);
                 return 1;
             }
+            return 0;
         }
         catch(IndexOutOfBoundsException e)
         {
             return -1;
         }
-        return 0;
     }
 
     public int removeItem(int index)
@@ -74,6 +75,7 @@ public class ContactList {
         int i;
         try {
             FileWriter out = new FileWriter(name);
+            out.write("Contact\n");
             for(i = 0; i < this.List.size() ; i++)
             {
                 out.write(this.List.get(i).getFirstName() + "\n");
@@ -83,6 +85,10 @@ public class ContactList {
             }
             out.close();
             return 1;
+        }
+        catch(FileAlreadyExistsException e)
+        {
+            return 0;
         }
         catch(IOException e)
         {
@@ -101,6 +107,12 @@ public class ContactList {
         try
         {
             Scanner in = new Scanner(inFile);
+            if(in.hasNextLine()) {
+                String isRightType = in.nextLine();
+                if (isRightType.compareTo("Contact") != 0) {
+                    return 0;
+                }
+            }
             while( in.hasNextLine())
             {
                 addItem(in.nextLine(), in.nextLine(), in.nextLine(), in.nextLine());

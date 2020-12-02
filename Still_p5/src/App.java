@@ -122,14 +122,6 @@ public abstract class App {
 
     static boolean performLoad(TaskList listTasks)
     {
-        switch(listTasks.loadList(getListName()))
-        {
-            case 1 :
-                return true;
-            case 0 :
-                System.out.println("ERROR: File does not exist");
-                return false;
-        }
         return false;
     }
 
